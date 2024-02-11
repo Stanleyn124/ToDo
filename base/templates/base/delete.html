@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<form method="POST"> {% comment %} will send post request  {% endcomment %}
+    {% csrf_token %}
+   {{taskobj_id}}
+    <p>Are you sure you want to delete "{{obj}}"?</p>
+    <a href="{{request.META.HTTP_REFERER}}">Go Back</a>
+    <input type="submit" value="Confirm" />
+</form>
+
+
+<!-- <form method="POST">
+    {% csrf_token %}
+    {{taskobj_id}}
+    <div class="modal">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Are you sure you want to delete "{{obj}}"? </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"></span>
+            </button>
+            </div>
+            <div class="modal-body">
+            <p>If deleted the tasks data will be lost forever!!!</p>
+            </div>
+            <div class="modal-footer">
+            <a href="{% url 'delete-task' task.id%}" class="btn btn-danger" value="Confirm" type="submit"> Delete</a>
+            
+            <a href="{{request.META.HTTP_REFERER}}" class="btn btn-secondary" type="submit"> Go Back</a>
+
+        
+            </div>
+        </div>
+        </div>
+    </div>
+</form> -->
+
+
+{% endblock content %}

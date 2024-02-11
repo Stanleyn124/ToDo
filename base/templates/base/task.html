@@ -1,0 +1,235 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+<div class="card border-secondary mb-3" >
+
+  <style>
+    .card-layout-unique {
+        display: grid;
+        grid-template-columns: 3fr 2fr ;
+        
+    }
+    .header {
+      grid-column: 1;
+      grid-row: 1;
+      
+    }
+
+    .row {
+      display: table-cell;
+    }
+
+    .side_bar_header {
+      grid-column: 2 ;
+      grid-row: 1;
+      background-color: #f321c6; 
+      /* {% comment %} background-color: #2121Z3 {% endcomment %} */
+    }
+    .messages {
+      grid-column: 1 ;
+      grid-row: 2;
+      background-color: #f38021;
+      overflow-y: scroll;
+      max-height: 400px;
+      /* {% comment %} background-color: #2121Z3 {% endcomment %} */
+    }
+    .side_bar {
+      grid-column: 2 ;
+      grid-row: 2;
+    }
+    .task_info {
+      background-color: #2196F3;
+    }
+
+
+  </style>
+
+  <div class ="card-layout-unique">
+    
+    <div class="header">
+      <div class="card-header">
+        <h3>
+        
+          {{task.name}}
+        
+          {% if "primary" in task.priority.tag_color_type %}
+          
+            <span class="badge rounded-pill bg-primary float-end">{{task.priority}} Priority</span>
+        
+          {% elif "secondary" in task.priority.tag_color_type %}
+
+            <span class="badge rounded-pill bg-secondary float-end">{{task.priority}} Priority</span>
+
+
+          {% elif "success" in task.priority.tag_color_type %}
+
+            <span class="badge rounded-pill bg-success float-end">{{task.priority}} Priority</span>
+
+          {% elif "danger" in task.priority.tag_color_type %}
+
+            <span class="badge rounded-pill bg-danger float-end">{{task.priority}} Priority</span>
+
+          {% elif "warning" in task.priority.tag_color_type %}
+
+            <span class="badge rounded-pill bg-warning float-end">{{task.priority}} Priority</span>
+
+          {% elif "info" in task.priority.tag_color_type %}
+
+            <span class="badge rounded-pill bg-info float-end">{{task.priority}} Priority</span>
+
+          {% elif "light" in task.priority.tag_color_type %}
+
+            <span class="badge rounded-pill bg-light float-end">{{task.priority}} Priority</span>
+
+          {% elif "bg-dark" in task.priority.tag_color_type %}
+
+            <span class="badge rounded-pill bg-dark float-end">{{task.priority}} Priority</span>
+          
+          {% endif %}
+        </h3>
+      </div>
+      <div class="task_info" class="row">
+      <div class="card-body">
+        <div class="task-layout">
+            
+            <p class="card-text">
+                <div>
+                  {% if 'update' not in request.path %}
+                  <h4 class="card-title">Description: {{task.description}} </h4>
+                    <div>
+                      <p> 📅 Deadline: {{task.deadline}}</p>
+
+                      <p> ❓  Status: {{task.status}}</p>
+
+                      <p> ✏️ Last updated: {{task.update}} </p>
+                    
+                      <p> 🎟️ Tag: {{task.tag}}</p>
+                      
+                      <p> 📜 List: {{task.list}}</p>
+                    </div>
+
+                    <form class="button__select" method="POST">
+                      {% csrf_token %}
+                    <div class="form-group">
+                      <label for="exampleTextarea" class="form-label mt-4">Add a Message 💬</label>
+                   
+                      <textarea class="form-control" name = "body" id="exampleTextarea" rows="3"></textarea>
+                    
+                    </div>
+                    <!-- value="MessageUpdate" -->
+                    <input href="{% url 'task' task.id%}" class="btn btn-success" name="action"  type="submit"> </input>
+                     </form>
+
+                    {% elif 'update' in request.path %}
+                    
+
+
+
+
+
+
+
+                    {% include 'base/update_create_task.html' %}
+
+
+
+
+
+
+
+                      <a href="{% url 'task' task.id%}" class="btn btn-danger" type="submit"> Cancel</a>
+                    </div>
+
+                    {% endif %}
+
+                  </div>    
+        </div>
+      </div>
+    </div>
+    </div>
+    
+
+    <div class="side_bar">
+      <div>
+        <p> Last updated: {{task.update}}</p>
+        <br>
+        <p> Deadline: {{task.deadline}}</p>
+      </div>
+    </div>
+
+    
+    
+        <div class="side_bar_header">
+        <div class="card-header">
+          
+          
+            {% if 'update' not in request.path %}
+            <a href="{% url 'update-task' task.id%}" class="btn btn-success" type="submit"> Update Task</a>
+           
+            {% elif 'update' in request.path %}
+            <a href="{% url 'task' task.id%}" class="btn btn-success" type="submit"> Stop Editing Task</a>
+            {% endif %}
+
+            <a href="{% url 'delete-task' task.id%}" class="btn btn-danger" type="submit"> Delete Task</a>
+
+            <!-- <div>
+              <div class="form-group">
+                <div>
+                  <label for="exampleSelect1" class="form-label mt-4"></label>
+                  <select class="form-select" id={{task.status}}>
+                    {% for status in statuss %}
+                      <option>{{status}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+          </div> -->
+      
+      </div> 
+  <div class="messages" class="row">
+  <div class="card-body">
+    
+    
+      <div style="width:auto;" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+          {% for message in task_messages %}
+              <div class="toast-header">
+                  <strong class="me-auto"> 
+                      @{{message.user}} 
+                  </strong>
+                  <small>
+                      {{message.created|timesince}} ago
+                  </small>
+
+
+
+                  <!-- <form method="POST"> -->
+                    {% csrf_token %}
+
+                  <a href="{% url 'delete-message' message.id%}" type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                  </a>
+                  
+              
+              </div>
+              <div class="toast-body">
+                  {{message.body}}
+                  <br>
+              </div>
+          {% endfor %}
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+
+  </div> 
+</div>
+
+
+
+{% endblock content %}
+
+

@@ -1,0 +1,82 @@
+{% block content %}
+
+<style>
+  .content_tasks {
+      overflow-y: scroll;
+      max-height: 800px;
+    }
+  </style>
+
+<div class="card text-white bg-info mb-3" >
+ 
+  <div class="card-body">
+    <h4 class="card-title">Tasks ✅:
+
+      <span class="badge bg-dark rounded-pill">{{tasks_count}}</span>   
+      <a href="{% url 'create-task' %}" class="btn btn-success float-end" type="submit">Create Task +</a>
+        
+    </h4>
+
+  </div>
+</div>
+
+<div class="content_tasks" class="card border-secondary mb-3" >
+    {% for task in tasks %}
+
+    <div class="card-header"><a href="{% url 'task' task.id %}">{{task.name}} </a>
+        
+
+        {% if "primary" in task.priority.tag_color_type %}
+        
+          <span class="badge rounded-pill bg-primary float-end">{{task.priority}} Priority</span>
+      
+        {% elif "secondary" in task.priority.tag_color_type %}
+
+          <span class="badge rounded-pill bg-secondary float-end">{{task.priority}} Priority</span>
+
+
+        {% elif "success" in task.priority.tag_color_type %}
+
+          <span class="badge rounded-pill bg-success float-end">{{task.priority}} Priority</span>
+
+        {% elif "danger" in task.priority.tag_color_type %}
+
+          <span class="badge rounded-pill bg-danger float-end">{{task.priority}} Priority</span>
+
+        {% elif "warning" in task.priority.tag_color_type %}
+
+          <span class="badge rounded-pill bg-warning float-end">{{task.priority}} Priority</span>
+
+        {% elif "info" in task.priority.tag_color_type %}
+
+          <span class="badge rounded-pill bg-info float-end">{{task.priority}} Priority</span>
+
+        {% elif "light" in task.priority.tag_color_type %}
+
+          <span class="badge rounded-pill bg-light float-end">{{task.priority}} Priority</span>
+
+        {% elif "bg-dark" in task.priority.tag_color_type %}
+
+          <span class="badge rounded-pill bg-dark float-end">{{task.priority}} Priority</span>
+        
+        {% endif %}
+
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">{{task.description}} </h4>
+        <p class="card-text">
+            <div>
+                <p> 📅 Deadline: {{task.deadline}}</p>
+
+                <p> ❓  Status: {{task.status}}</p>
+
+                <p> ✏️ Last updated: {{task.update}} </p>
+            </div>
+        </p>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+{% endblock content %}

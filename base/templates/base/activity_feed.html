@@ -1,0 +1,134 @@
+{% block content %}
+
+<style>
+.content_messages {
+    overflow-y: scroll;
+    max-height: 300px;
+  }
+</style>
+
+<div class="card text-white bg-info mb-3" >
+  
+    <div class="card-body">
+      
+      <h4 class="card-title">Messages 💬
+      </h4>
+    
+    </div>
+    
+  </div>
+
+
+
+<div class ="content_messages" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+
+    {% for message in task_messages %}
+        <div class="toast-header">
+            {% comment %} <strong class="me-auto"> In Task " {{message.task}} ":</strong> {% endcomment %}
+            <strong class="me-auto"> 
+                @{{message.user}} 
+            </strong>
+            <small>
+                {{message.created|timesince}} ago
+            </small>
+        </div>
+        <div class="toast-body">
+            
+    
+            {{message.body}}
+            <br> 
+            <br> 
+        <strong>
+            <a href="{% url 'task' message.task.id %}">{{message.task}} </a>
+    
+        </strong>    
+           
+        </div>
+        <hr>
+    {% endfor %}
+</div>
+
+
+
+
+<br>
+<br>
+<br>
+
+<div class="query-complete-task">
+    {% comment %} <form method="POST" action="{% url 'home' %}">
+        <select name="q_task">
+            {% for status in statuss %}
+                <option value={{status.status}}>{{status.status}}</option>
+            {% endfor %}
+        </select>
+    </form> {% endcomment %}
+
+
+
+  
+
+    {% comment %} <form method="POST" action="{% url 'home' %}">
+        {% csrf_token %}
+        <select name = "q_task">
+            <option selected disabled=true>--Select Status Level--</option>
+            {% for status in statuss %}
+                    <option value={{status.status}}>{{status.status}}</option>
+                    {{q_task}}
+            {% endfor %}
+        </select>
+    </form> {% endcomment %}
+
+
+
+</div>
+
+<div class="activityfeed-completed-tasks">
+
+
+    
+    <div class="form-group" >
+        <div>
+          <label for="exampleSelect1" class="form-label mt-4">Change Status</label>
+
+            <form action="{% url 'home' %}?q={{status.status}}">
+
+                <select name="q" class="form-select" id="exampleSelect1">
+                    {% for status in statuss %}
+                        <option selected="selected" > 
+                            <a> {{status.status}}</a>
+                        <option>
+                    {% endfor %}
+                </select>
+
+                <input type="submit" value="click">
+            </form>
+        </div>
+    </div>
+      
+
+
+    <h3>
+        Status Lists:
+    </h3>
+
+    <div>
+    
+        {% for priority_complete in priority_completed %}
+        
+            {{priority_complete.name}}  
+            <br>
+            
+        {% endfor %}
+        
+        
+
+        
+
+    </div>
+
+</div>
+
+{% endblock content %}
+
+

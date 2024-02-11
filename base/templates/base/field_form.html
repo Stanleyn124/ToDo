@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div>
+    <form method="POST"> 
+    {% csrf_token %}
+    {{form.as_p}} {% comment %} this puts the fields out in a generic way {% endcomment %}
+    <input type="submit" value="Submit" />
+
+
+</div>
+
+
+{% endblock content %}

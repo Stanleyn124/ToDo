@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+    .home-container {
+        display: grid;
+        grid-template-columns: 4fr 9fr 4fr;
+
+    }
+
+</style>
+
+
+<div class="home-container">
+    <div>
+
+        {% include 'base/manager.html' %}
+
+    </div>
+
+    <div>
+        
+        {% include 'base/tasks_feed.html' %}
+    
+    </div>
+
+    <div>
+
+        {% include 'base/activity_feed.html' %}
+        
+    </div>
+
+</div>
+
+
+
+
+{% endblock content %}
+
+

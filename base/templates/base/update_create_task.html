@@ -1,0 +1,82 @@
+{% block content %}
+
+<form class="button__select_update" method="POST">
+    <h4 class="card-title">Description: </h4>
+    <textarea class="form-control" name = "desc_body" id="exampleTextarea" rows="3">{{task.description}}</textarea>
+    <div>
+
+    {% if 'update' in request.path %}
+
+      <p> 📅 Deadline: {{task.deadline}}</p>
+
+      <p> ✏️ Last updated: {{task.update}} </p>
+
+    {% endif %}
+
+
+    <p> ❓  Status: 
+    <select name="status_task" class="form-select w-auto" id="status_task" >
+        {% for status in statuss %}
+
+            {% if 'update' in request.path %}
+
+                {% if status.status != task.status.status %}
+                    <option> 
+                    {{status.status}}
+                    </option>
+                {% else %}
+                    <option selected="selected" > 
+                    {{task.status.status}}
+                    </option>
+                {% endif %}
+
+            {% elif 'create' in request.path %}
+                <option> 
+                    {{status.status}}
+                </option>
+
+            {% endif %} 
+
+        {% endfor %}
+    </select>
+    </p>
+
+      
+    
+    <p for="tag_label"> 🎟️ Tag: >
+    <select name="tag_label" class="form-select w-auto" id="tag_label" > 
+        {% for tag in tags %}
+        {% if tag.tag != task.tag.tag %}
+        <option> 
+            {{tag.tag}}
+        </option>
+        {% else %}
+        <option selected="selected" > 
+            {{task.tag.tag}}
+        </option>
+        {% endif %}
+        {% endfor %}
+    </select>
+    </p>
+      
+      <p> 📜 List:
+        <select name="list_task" class="form-select w-auto" id="exampleSelect1" >
+          {% for list in lists %}
+          {% if list.name != task.list.name %}
+            <option> 
+              {{list.name}}
+            </option>
+          {% else %}
+            <option selected="selected" > 
+              {{task.list.name}}
+            </option>
+          {% endif %}
+          {% endfor %}
+        </select>
+      </p>
+      
+    {% csrf_token %}
+    <input href="{% url 'update-task' task.id%}" class="btn btn-success" name="action"  type="submit"> </input>
+</form>
+
+{% endblock content %}

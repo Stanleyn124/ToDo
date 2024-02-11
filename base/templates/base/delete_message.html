@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<!-- <form method="POST"> {% comment %} will send post request  {% endcomment %}
+    {% csrf_token %}
+   {{taskobj_id}}
+    <p>Are you sure you want to delete "{{obj}}"?</p>
+    <a href="{{request.META.HTTP_REFERER}}">Go Back</a>
+    <input type="submit" value="Confirm" />
+</form> -->
+
+<form method="POST"> 
+    {% csrf_token %}
+    <div class="alert alert-dismissible alert-danger">
+        <strong>Are you sure you want to delete</strong> <a href="#" class="alert-link">"{{obj}}"?</a> It will be lost forever!.
+        
+        <input href="{{request.META.HTTP_REFERER}}" class="btn btn-warning" value="Go Back" type="submit"></input>
+        <input class="btn btn-success" value="Confirm" type="submit"> </input>
+    </div>
+</form>
+
+{% endblock content %}

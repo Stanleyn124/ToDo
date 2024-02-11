@@ -1,0 +1,127 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<!-- <div>
+    <form method="POST"> 
+    {% csrf_token %}
+    {{form.as_p}} {% comment %} this puts the fields out in a generic way {% endcomment %}
+    <input type="submit" value="Submit" />
+
+
+</div> -->
+
+<style>
+  .priority-layout {
+      display: grid;
+      grid-template-columns: 1fr 2fr ;
+      
+  }
+  .left {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .right {
+    grid-column: 2 ;
+    grid-row: 1;
+    /* {% comment %} background-color: #2121Z3 {% endcomment %} */
+  }
+  
+  
+</style>
+
+<div class="priority-layout">
+  <!-- <form class="d-flex" method="GET"> -->
+  <div class="left">
+    <label class="col-form-label mt-4" name = "priority_text_submit" for="inputDefault">New Priority Name</label>
+    {% if num_results > 0 and tracker == 1 %}
+    <div class="form-group has-danger">
+      <input href="{% url 'create-priority' %}" type="text" value = "{{existing_priority}}" value="Name taken, please try again..." name = "priority_text_submit" class="form-control is-invalid" id="inputInvalid">
+      <div class="invalid-feedback">Name taken, please try again...</div>
+      <!-- <button class="btn btn-secondary my-2 my-sm-0" value = "button_enter" type="submit">Enter</button> -->
+
+    </div>
+
+    {% elif num_results == 0 and tracker == 1%}
+
+    <div class="form-group has-success">
+      <input href="{% url 'create-priority' %}" type="text" value = "{{existing_priority}}" name = "priority_text_submit" class="form-control is-valid" id="inputValid">
+      <div class="valid-feedback">Name is valid! </div>
+    </div>
+
+    {% else %}
+
+    <div class="form-group">
+      
+        <input href="{% url 'create-priority' %}" type="text" value = "{{existing_priority}}" class="form-control me-sm-2" placeholder="Input a new Priority name..." name = "priority_text_submit" id="inputDefault">
+        <div class="valid-feedback">Input a priority name...</div>
+        <!-- <button class="btn btn-secondary my-2 my-sm-0" value = "button_enter" type="submit">Enter</button> -->
+      
+    </div>
+
+    {% endif %}
+
+    <div>
+      
+      <fieldset class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name = "checkbox" value="primary" id="primary">
+          <label class="form-check-label" for="flexCheckChecked">
+            <span class="badge rounded-pill bg-primary">Primary</span>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name = "checkbox" value="secondary" id="secondary">
+          <label class="form-check-label" for="flexCheckChecked">
+            <span class="badge rounded-pill bg-secondary">secondary</span>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name = "checkbox" value="success" id="success">
+          <label class="form-check-label" for="flexCheckChecked">
+            <span class="badge rounded-pill bg-success">success</span>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name = "checkbox" value="danger" id="danger">
+          <label class="form-check-label" for="flexCheckChecked">
+            <span class="badge rounded-pill bg-danger">danger</span>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name = "checkbox" value="warning" id="warning">
+          <label class="form-check-label" for="flexCheckChecked">
+            <span class="badge rounded-pill bg-warning">warning</span>
+          
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name = "checkbox" value="info" id="info">
+          <label class="form-check-label" for="flexCheckChecked">
+            <span class="badge rounded-pill bg-info">info</span>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name = "checkbox" value="light" id="light">
+          <label class="form-check-label" for="flexCheckChecked">
+            <span class="badge rounded-pill bg-light">light</span>
+        </div>
+        
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name = "checkbox" value="dark" id="dark">
+          <label class="form-check-label" for="flexCheckChecked">
+            <span class="badge rounded-pill bg-dark">dark</span>
+        </div>
+
+    </fieldset>
+
+    </div>
+    <form class="" method="POST">
+      {% csrf_token %}
+      <input href="{% url 'create-priority' %}" class="btn btn-success" name="action"  type="submit"> </input>
+
+    </form>
+  </div>
+  
+</div>
+
+  {% endblock content %}
+
+

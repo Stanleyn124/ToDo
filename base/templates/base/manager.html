@@ -1,0 +1,297 @@
+{% block content %}
+
+
+
+  <style>
+    /* .header {
+    height: 10    
+    } */
+    
+    .content {
+      background-color: #f38021;
+      overflow-y: scroll;
+      max-height: 150px;
+      /* {% comment %} background-color: #2121Z3 {% endcomment %} */
+    }
+    
+  </style>
+
+
+
+<!-- Tags Start -->
+<div>
+  <div class="card text-white bg-info mb-3" >
+  
+    <div class="card-body">
+      
+      <h4 class="card-title">Tags 🎟️:
+    
+        <span class="badge bg-dark rounded-pill">{{tags_count}}</span>   
+        <a href="{% url 'create-tag' %}" class="btn btn-success float-end" type="submit">Add +</a>
+    
+      </h4>
+    
+    </div>
+    
+  </div>
+
+  <div class="content">
+    <ul class="list-group">
+      {% for tag in tags %}
+      <div>  
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          
+          <a href="{% url 'home' %}?q={{tag.tag}}" class="btn btn-success" type="submit">{{tag.tag}} f</a>
+          
+          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group me-2" role="group" >
+              <a href="{% url 'update-tag' tag.id%}"  type="button" class="btn"  >✏️</a>
+              <a type="button" class="btn">
+                <span class="badge bg-primary rounded-pill">
+                  {{tag.task_set.all.count}} 
+                </span>    
+              </a>
+            </div>
+          </div>
+        </li>
+
+
+    </div>
+    {% endfor %}
+    </ul>
+
+  </div>
+
+</div>
+<!-- Tags End -->
+
+<!-- Lists Start -->
+<div>
+  <div class="card text-white bg-info mb-3" >
+  
+    <div class="card-body">
+      
+      <h4 class="card-title">Lists 📜:
+    
+        <span class="badge bg-dark rounded-pill">{{lists_count}}</span>   
+        <a href="{% url 'create-list' %}" class="btn btn-success float-end" type="submit">Add +</a>
+    
+      </h4>
+    
+    </div>
+    
+  </div>
+
+  <div class="content">
+    <ul class="list-group">
+
+      {% for list in lists %}
+      <div>  
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          
+          <a href="{% url 'home' %}?q={{list.name}}" class="btn btn-success" type="submit">{{list.name}} </a>
+          
+          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group me-2" role="group" >
+              <a href="{% url 'update-list' list.id%}"  type="button" class="btn"  >✏️</a>
+              <a type="button" class="btn">
+                <span class="badge bg-primary rounded-pill">
+                  {{list.task_set.all.count}}
+                </span>    
+              </a>
+            </div>
+          </div>
+        </li>
+
+
+    </div>
+    {% endfor %}
+    </ul>
+
+  </div>
+
+</div>
+<!-- Lists End -->
+
+<!-- Priorities Start -->
+<div>
+
+    <div class="card text-white bg-info mb-3" >
+ 
+      <div class="card-body">
+        
+        <h4 class="card-title">Prioritys 🏁:
+      
+          <span class="badge bg-dark rounded-pill">{{prioritiy_count}}</span>   
+          <a href="{% url 'create-priority' %}" class="btn btn-success float-end" type="submit">Add +</a>
+            
+        </h4>
+      
+      
+      </div>
+      
+   
+    </div>
+  <div class="content">
+    <ul class="list-group">
+      {% for priority in prioritys %}
+
+          
+        {% if "primary" in priority.tag_color_type %}
+          
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          
+          <a href="{% url 'home' %}?q={{priority.priority}}" class="btn btn-primary" type="submit">{{priority.priority}}</a>
+          
+          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group me-2" role="group" >
+              <a href="{% url 'update-priority' priority.id%}"  type="button" class="btn"  >✏️</a>
+              <a type="button" class="btn">
+                <span class="badge bg-primary rounded-pill">
+                  {{priority.task_set.all.count}}
+                </span>    
+              </a>
+            </div>
+          </div>
+        </li>
+    
+      {% elif "secondary" in priority.tag_color_type %}
+    
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+          
+        <a href="{% url 'home' %}?q={{priority.priority}}" class="btn btn-secondary" type="submit">{{priority.priority}}</a>
+        
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div class="btn-group me-2" role="group" >
+            <a href="{% url 'update-priority' priority.id%}"  type="button" class="btn"  >✏️</a>
+            <a type="button" class="btn">
+              <span class="badge bg-primary rounded-pill">
+                {{priority.task_set.all.count}}
+              </span>    
+            </a>
+          </div>
+        </div>
+      </li>
+    
+      {% elif "success" in priority.tag_color_type %}
+    
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+          
+        <a href="{% url 'home' %}?q={{priority.priority}}" class="btn btn-success" type="submit">{{priority.priority}}</a>
+        
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div class="btn-group me-2" role="group" >
+            <a href="{% url 'update-priority' priority.id%}"  type="button" class="btn"  >✏️</a>
+            <a type="button" class="btn">
+              <span class="badge bg-primary rounded-pill">
+                {{priority.task_set.all.count}}
+              </span>    
+            </a>
+          </div>
+        </div>
+      </li>
+    
+    
+      {% elif "danger" in priority.tag_color_type %}
+    
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+          
+        <a href="{% url 'home' %}?q={{priority.priority}}" class="btn btn-danger" type="submit">{{priority.priority}}</a>
+        
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div class="btn-group me-2" role="group" >
+            <a href="{% url 'update-priority' priority.id%}"  type="button" class="btn"  >✏️</a>
+            <a type="button" class="btn">
+              <span class="badge bg-primary rounded-pill">
+                {{priority.task_set.all.count}}
+              </span>    
+            </a>
+          </div>
+        </div>
+      </li>
+      {% elif "warning" in priority.tag_color_type %}
+    
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+          
+        <a href="{% url 'home' %}?q={{priority.priority}}" class="btn btn-warning" type="submit">{{priority.priority}}</a>
+        
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div class="btn-group me-2" role="group" >
+            <a href="{% url 'update-priority' priority.id%}"  type="button" class="btn"  >✏️</a>
+            <a type="button" class="btn">
+              <span class="badge bg-primary rounded-pill">
+                {{priority.task_set.all.count}}
+              </span>    
+            </a>
+          </div>
+        </div>
+      </li>
+
+      {% elif "info" in priority.tag_color_type %}
+    
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+          
+        <a href="{% url 'home' %}?q={{priority.priority}}" class="btn btn-info" type="submit">{{priority.priority}}</a>
+        
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div class="btn-group me-2" role="group" >
+            <a href="{% url 'update-priority' priority.id%}"  type="button" class="btn"  >✏️</a>
+            <a type="button" class="btn">
+              <span class="badge bg-primary rounded-pill">
+                {{priority.task_set.all.count}}
+              </span>    
+            </a>
+          </div>
+        </div>
+      </li>
+      {% elif "light" in priority.tag_color_type %}
+    
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+          
+        <a href="{% url 'home' %}?q={{priority.priority}}" class="btn btn-light" type="submit">{{priority.priority}}</a>
+        
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div class="btn-group me-2" role="group" >
+            <a href="{% url 'update-priority' priority.id%}"  type="button" class="btn"  >✏️</a>
+            <a type="button" class="btn">
+              <span class="badge bg-primary rounded-pill">
+                {{priority.task_set.all.count}}
+              </span>    
+            </a>
+          </div>
+        </div>
+      </li>
+      {% elif "bg-dark" in priority.tag_color_type %}
+    
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+          
+        <a href="{% url 'home' %}?q={{priority.priority}}" class="btn btn-bg-dark" type="submit">{{priority.priority}}</a>
+        
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+          <div class="btn-group me-2" role="group" >
+            <a href="{% url 'update-priority' priority.id%}"  type="button" class="btn"  >✏️</a>
+            <a type="button" class="btn">
+              <span class="badge bg-primary rounded-pill">
+                {{priority.task_set.all.count}}
+              </span>    
+            </a>
+          </div>
+        </div>
+      </li>
+    
+      
+      {% endif %}
+
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+<!-- Priorities End -->
+
+
+
+  
+
+
+  
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+<div class="alert alert-dismissible alert-danger">
+    <strong>{{reason_message}}</strong> <a href="" class="alert-link">{{message_underline}}</a>
+
+    
+    <a href="{% url 'home' %}" class="btn btn-success " type="submit"> Go Home</a>
+
+</div>
+
+
+{% endblock content %}
